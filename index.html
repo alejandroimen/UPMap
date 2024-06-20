@@ -8,27 +8,61 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header>
+        <h1>WELCOME TU UPMAP</h1>
+    </header>
 
-    <form action="">
-        <h1>Agregar Edificio</h1>
-        <input placeholder="Nombre" type="text">
-    </form>
-    
+    <main>
+        <div id="containerDFS" class="main_div-results">
+            <button id="btnDFS" class="btnPurple">INICIAR RECORRIDO</button>
 
-    <form action="">
-        <h1>Agregar Camino</h1>
-        <label>De: </label>
-        <select name="" id="selectEdificioOrigen">
-            <option value="">Seleccionar</option>
-        </select>
-        <input placeholder="Distancia (m)" type="number">
-        
-        <label>A: </label>
-        <select name="" id="selectEdificioDestino">
-            <option value="">Seleccionar</option>
-        </select>
-        <input placeholder="Distancia (m)" type="number">
-    </form>
+            <ul id="listaResultDFS" class="div_ul-Redorrido">
+                <li id="firstChildTest"></li>
+            </ul>
+        </div>
+        <div class="main_div-agregar">
+            <form action="">
+                <h1>Agregar Edificio</h1>
+                <input id="inputName" placeholder="Nombre" type="text">
+                <button type="button" id="btnAddVertex">Agregar</button>
+            </form>
+
+            <form action="">
+                <h1>Agregar Camino</h1>
+                <div>
+                    <label>De: </label>
+                    <select name="" id="selectEdificioOrigen">
+                        <option value="">Seleccionar</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label>A: </label>
+                    <select name="" id="selectEdificioDestino">
+                        <option value="">Seleccionar</option>
+                    </select>
+                </div>
+                <input id="inputWeight" placeholder="Distancia (m)" type="number">
+                <button type="button" id="btnAddEdge">Agregar</button>
+            </form>
+        </div>
+        <div class="main_div-djikstra">
+            <form action="">
+                <h1>Buscar dustancia minima</h1>
+                <p>Seleccione una ubicacion de inicio para conocer las distancias minimas a cada uno de los otros edificios</p>
+                <div class="form_div-selectDijkstra">
+                    <select name="" id="selectOrigenDjikstra">
+                        <option value="">Seleccionar vertice</option>
+                    </select>
+                </div>
+                <button id="btndijkstra" type="button">Buscar</button>
+            </form>
+            <h1 id="mjeOrigen">Distancias mínimas desde </h1>
+            <ul id="listResultsDjikstra">
+               
+            </ul>
+        </div>
+    </main>
     
     <script type="module" src="./src/controllers/script.js"></script>
 </body>
