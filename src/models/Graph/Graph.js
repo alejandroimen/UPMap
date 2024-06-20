@@ -11,9 +11,13 @@ export default class Graph {
         this.#listaAdyacencia = [];
     }
 
+    getAllVertexes(){   
+        return this.#mapeoInverso
+    }
+
     addVertex(key){
         if(this.#map.has(key)){
-            console.log(key + "Already in Graph")
+            console.log(key + " Already in Graph")
             return false
         }else{
             let lista = new LinkedList()
@@ -31,29 +35,35 @@ export default class Graph {
             this.#listaAdyacencia.push(lista)
             this.#mapeoInverso.set(this.#listaAdyacencia.length-1, value);
             this.#map.set(value, this.#listaAdyacencia.length-1)
+            console.log(this.#mapeoInverso.get(this.#listaAdyacencia.length-1))
         }
     }
 
     addEdge(v1, v2, weight=1){
         if (this.#map.has(v1) && this.#map.has(v2)){
             this.#listaAdyacencia[this.#map.get(v1)].add(v2, weight)
-            
-            this.#listaAdyacencia[this.#map.get(v1)].run((node) => {
-                console.log(node.getKey());
-            })
+            return true
         }else{
-            console.log("Not in Graph")
+            console.log('Not in graph')
+            return false
         }
     }
 
-    bfs(callback){
+    bfs(callback, key=null){
+        
         let queue = []
         let listMarkers = []
         
         for (let i=0; i<this.#listaAdyacencia.length; i++)
             listMarkers[i] = false
-        
-        queue.push(this.#mapeoInverso.get(0))
+
+        if(!key){
+            queue.push(this.#mapeoInverso.get(0))
+        }else if(this.#map.has(key)){
+            queue.push(key)
+        }else{
+            console.log('error');
+        }
         
         while (queue.length > 0) {
             let val = queue.shift() //Sacamos el primer elemento de la cola
@@ -96,24 +106,49 @@ export default class Graph {
         }
     }
 
-    /*
-    djikstra(a, z){
-        let listCostos = []
-        let listaMarkers = []
-        let vertex = a
+    djikstra(start){
+        let listCostos = Array(this.#listaAdyacencia.length).fill(Infinity);
+        let listMarkers = Array(this.#listaAdyacencia.length).fill(false);
+        let prevNodes = Array(this.#listaAdyacencia.length).fill(null);
+        let listaNoVisitados = new Set(this.#mapeoInverso.values());
 
-        for(let j = 0; j < this.#listaAdyacencia.length; j++)
-            listaMarkers.push(false)
+        listCostos[this.#map.get(start)] = 0;
 
-        for(let i = 0; i < this.#listaAdyacencia.length; i++){
-            listCostos.push()
+        while (listaNoVisitados.size > 0) {
+            let vertex = null;
+            let minCost = Infinity;
+
+            listaNoVisitados.forEach((v) => {
+                if (listCostos[this.#map.get(v)] < minCost) {
+                    minCost = listCostos[this.#map.get(v)];
+                    vertex = v;
+                }
+            });
+
+            if (vertex === null) break;
+
+            listaNoVisitados.delete(vertex);
+            listMarkers[this.#map.get(vertex)] = true;
+
+            this.#listaAdyacencia[this.#map.get(vertex)].run((node) => {
+                let neighbor = node.getKey();
+                let newCost = listCostos[this.#map.get(vertex)] + node.getWeight();
+                if (newCost < listCostos[this.#map.get(neighbor)]) {
+                    listCostos[this.#map.get(neighbor)] = newCost;
+                    prevNodes[this.#map.get(neighbor)] = vertex;
+                }
+            });
+
         }
-        matrix[0][this.#map.get(vertex)] = [0, new LinkedList()]
-        matrix[0][this.#map.get(vertex)][1].add(a)
 
-        let menor = 
-        
+        /*let path = [];
+        for (let at = end; at != null; at = prevNodes[this.#map.get(at)]) {
+            path.push(at);
+        }
+        path.reverse();
+        console.log('Path:', path);*/
+
+        return listCostos
     }
-    */
 
 }
