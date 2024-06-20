@@ -1,7 +1,229 @@
 :root {
     --morado: #511369;
+    --blanco: #f2f2f2; 
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 body {
-    
+    background-color: var(--blanco);
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+button {
+    transition: 0.3s;
+}
+button:hover {
+    transform: scale(105%);
+    transition: 0.3s;
+}
+
+header {
+    width: 100%;
+    min-height: 12vh;
+    background-color: var(--morado);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header h1 {
+    color: var(--blanco);
+    font-weight: bolder;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.main_div-results {
+    width: 35%;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+.btnPurple {
+    background-color: var(--morado);
+    color: var(--blanco);
+    height: 60px;
+    width: 35vw;
+    border: none;
+    border-radius: 30px;
+    font-size: 22px;
+    font-weight: bolder;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.div_ul-Redorrido li {
+    list-style: none;
+    border: solid 2px var(--morado);
+    min-height: 45px;
+    width: 30vw;
+    border-radius: 60px;
+    margin-top: 30px;
+    display: grid;
+    place-items: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.main_div-agregar {
+    width: 25%;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0%;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    padding: 20px 40px;
+    margin: 20px 0px;
+    box-sizing: border-box;
+    box-shadow: 0px 3px 8px var(--morado);
+    border-radius: 30px;
+}
+form h1 {
+    text-align: center;
+    font-size: 34px;
+    border: none;
+}
+form p {
+    border: none;
+    text-align: justify;
+}
+form div {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    border: none;
+}
+form div label {
+    border: none;
+    width: 15%;
+}
+form button {
+    color: var(--blanco);
+    background-color: var(--morado);
+}
+form input,
+form select {
+    padding-right: 15px;
+    padding-left: 15px;
+    appearance: none
+}
+form div::after {
+    content: '▼'; /* Puedes usar un símbolo o una imagen */
+    position:absolute;
+    top: 50%;
+    padding: 0px 7px;
+    transform: translateY(-50%);
+    right: 0px;
+    pointer-events: none; /* Asegura que no interfiera con las acciones del select */
+    font-size: 22px; /* Ajusta según sea necesario */
+    color: var(--morado);
+    border-left: solid 2px var(--morado);
+}
+form * {
+    width: 100%;
+    margin: 5px 0px;
+    font-size: 17px;
+    border-radius:18px;
+    min-height: 35px;
+    border: solid 2px var(--morado);
+    box-sizing: border-box;
+}
+
+.main_div-djikstra {
+    width: 30%;
+    margin-left: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+.form_div-selectDijkstra::after {
+    content: '▼'; /* Puedes usar un símbolo o una imagen */
+    position:absolute;
+    top: 50%;
+    padding: 0px 7px;
+    transform: translateY(-50%);
+    right: 0px;
+    pointer-events: none; /* Asegura que no interfiera con las acciones del select */
+    font-size: 22px; /* Ajusta según sea necesario */
+    color: var(--morado);
+    border-left: solid 2px var(--morado);
+}
+#listResultsDjikstra {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 5px;
+}
+#listResultsDjikstra li {
+    border: solid 2px var(--morado);
+    padding: 8px;
+    border-radius: 10px;
+    margin-right: 5px;
+    display: grid;
+    place-items: center;
+}
+
+
+.body_div-container {
+    position: fixed;
+    background-color:rgba(75, 75, 75, 50%);
+    width: 100%;
+    height: 100vh;
+    z-index: 1000;
+    display: grid;
+    place-items: center;
+}
+.div_div-alerta {
+    background-color: var(--blanco);
+    min-width: 40%;
+    max-width: 55%;
+    min-height: 30vh;
+    border-radius: 35px;
+    display: grid;
+    place-items: center;
+    padding: 30px;
+    box-sizing: border-box;
+}
+.div_div-alerta h1 {
+    color: var(--morado);
+    font-size: 60px;
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.div_div-alerta button {
+    background-color: var(--morado);
+    color: var(--blanco);
+    width: 92%;
+    height: 50px;
+    border: none;
+    border-radius: 30px;
+    font-size: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
