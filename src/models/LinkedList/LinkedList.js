@@ -10,7 +10,6 @@ class LinkedList {
 
     add(key, weigth){
         let node = new Node(key, weigth)
-        console.log(node);
         if(this.#head == null){
             this.#head = node
         }else{
@@ -19,7 +18,6 @@ class LinkedList {
                 current = current.next
             }
             current.next = node
-            console.log(current.next);
         }
 
         this.#size++
