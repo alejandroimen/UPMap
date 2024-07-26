@@ -42,6 +42,7 @@ export default class Graph {
     addEdge(v1, v2, weight=1){
         if (this.#map.has(v1) && this.#map.has(v2)){
             this.#listaAdyacencia[this.#map.get(v1)].add(v2, weight)
+            this.#listaAdyacencia[this.#map.get(v2)].add(v1, weight)
             return true
         }else{
             console.log('Not in graph')
@@ -106,49 +107,50 @@ export default class Graph {
         }
     }
 
-    djikstra(start){
-        let listCostos = Array(this.#listaAdyacencia.length).fill(Infinity);
-        let listMarkers = Array(this.#listaAdyacencia.length).fill(false);
-        let prevNodes = Array(this.#listaAdyacencia.length).fill(null);
-        let listaNoVisitados = new Set(this.#mapeoInverso.values());
+    createMatrix(){
+        let matrix = []
 
-        listCostos[this.#map.get(start)] = 0;
-
-        while (listaNoVisitados.size > 0) {
-            let vertex = null;
-            let minCost = Infinity;
-
-            listaNoVisitados.forEach((v) => {
-                if (listCostos[this.#map.get(v)] < minCost) {
-                    minCost = listCostos[this.#map.get(v)];
-                    vertex = v;
-                }
-            });
-
-            if (vertex === null) break;
-
-            listaNoVisitados.delete(vertex);
-            listMarkers[this.#map.get(vertex)] = true;
-
-            this.#listaAdyacencia[this.#map.get(vertex)].run((node) => {
-                let neighbor = node.getKey();
-                let newCost = listCostos[this.#map.get(vertex)] + node.getWeight();
-                if (newCost < listCostos[this.#map.get(neighbor)]) {
-                    listCostos[this.#map.get(neighbor)] = newCost;
-                    prevNodes[this.#map.get(neighbor)] = vertex;
-                }
-            });
-
+        for(let i = 0; i < this.#listaAdyacencia.length; i++){
+            let row = new Array(this.#listaAdyacencia.length).fill(undefined)
+            matrix.push(row)
         }
 
-        /*let path = [];
-        for (let at = end; at != null; at = prevNodes[this.#map.get(at)]) {
-            path.push(at);
+        for(let i = 0; i < this.#listaAdyacencia.length; i++){
+            this.#listaAdyacencia[i].run(node => {
+                matrix[i][this.#map.get(node.getKey())] = node.getWeight()
+            })
         }
-        path.reverse();
-        console.log('Path:', path);*/
 
-        return listCostos
+        return matrix
     }
 
+    djikstra(start){
+        let w = this.createMatrix();
+        let v = Array.from(this.#mapeoInverso.values());
+        let l = [];
+        let d = Array(this.#listaAdyacencia.length).fill(99999);
+
+        d[this.#map.get(start)] = 0;
+        let da = [...d];
+
+        while (l.length !== v.length) {
+            let minCost = Math.min(...da.filter(val => val !== undefined));
+            let index = da.indexOf(minCost);
+
+            if(index === -1)
+                break
+
+            for (let i = 0; i < v.length; i++) {
+                if (w[index][i] !== undefined) { //
+                    let newCost = d[index] + w[index][i];
+                    if (newCost < d[i]) {
+                        d[i] = newCost;
+                    }
+                }
+            }
+            da[index] = undefined
+        }
+
+        return d
+    }
 }
