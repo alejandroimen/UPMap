@@ -68,7 +68,15 @@ function startDFS(){
 
  function iniciarDijkstra () {
     let verticeOrigen = document.getElementById('selectOrigenDjikstra').value
-    let listaResults = document.getElementById('listResultsDjikstra')
+    let containerResults = document.getElementById('containerResultsDjikstra')
+    let listaAEliminar = document.getElementById('listResultsDjikstra')
+
+    if(listaAEliminar){
+        listaAEliminar.remove()
+    }
+
+    let listaResults = document.createElement('ul');
+    listaResults.id = 'listResultsDjikstra';
 
     document.getElementById('mjeOrigen').textContent = document.getElementById('mjeOrigen').textContent + ' ' + verticeOrigen
     if(verticeOrigen){
@@ -83,7 +91,7 @@ function startDFS(){
                 let costo = document.createElement('p')
 
                 name.textContent = valor
-                costo.textContent = listaDistancias[index]
+                costo.textContent = listaDistancias[index] + ' m'
 
                 elemento.appendChild(name)
                 elemento.appendChild(costo)
@@ -91,6 +99,7 @@ function startDFS(){
                 listaResults.appendChild(elemento)
             }
         })
+        containerResults.appendChild(listaResults)
     }else{
         renderAlert(false)
     }
